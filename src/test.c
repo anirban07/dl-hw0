@@ -38,9 +38,25 @@ void test_matrix_speed()
     printf("Transpose elapsed %lf sec\n", what_time_is_it_now() - start);
 }
 
+void test_matmul_correctness() {
+    size_t i;
+    matrix matrix_a = make_matrix(4, 3);
+    matrix matrix_b = make_matrix(3, 2);
+    float a_data[] = {1, 2, 3,  4, 5, 6,  7, 8, 9,  10, 11, 12};
+    float b_data[] = {11, 22,  33, 44,  55, 66};
+    float c_expected_data[] = {242, 308,  539, 704,  836, 1100,  1133, 1496};
+    matrix_a.data = a_data;
+    matrix_b.data = b_data;
+    matrix matrix_c = matmul(matrix_a, matrix_b);
+    for (i = 0; i < matrix_c.cols * matrix_c.rows; i++) {
+        assert(matrix_c.data[i] == c_expected_data[i]);
+    }
+}
+
 void run_tests()
 {
     test_matrix_speed();
+    test_matmul_correctness();
     //printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
 }
 
