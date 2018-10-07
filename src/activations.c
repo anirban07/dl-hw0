@@ -11,11 +11,15 @@ void activate_matrix(matrix m, ACTIVATION a)
     int i, j;
     for(i = 0; i < m.rows; ++i){
         double sum = 0;
+        double max = m.data[i * m.cols];
+        // for (j = 0; j < m.cols; j++) {
+        //     max = m.data[i*m.cols + j] > max ? m.data[i*m.cols + j] : max;
+        // }
         for(j = 0; j < m.cols; ++j){
             double x = m.data[i*m.cols + j];
             if(a == LOGISTIC){
                 // TODO
-                m.data[i*m.cols + j] = 1.0 / (1 + exp(-1 * x));
+                m.data[i*m.cols + j] = 1.0 / (1 + exp(-(x - max)));
             } else if (a == RELU){
                 // TODO
                 m.data[i*m.cols + j] = x > 0 ? x : 0;
@@ -24,12 +28,13 @@ void activate_matrix(matrix m, ACTIVATION a)
                 m.data[i*m.cols + j] = x > 0 ? x : 0.1 * x;
             } else if (a == SOFTMAX){
                 // TODO
-                m.data[i*m.cols + j] = exp(x);
+                m.data[i*m.cols + j] = exp(x - max);
             }
             sum += m.data[i*m.cols + j];
         }
         if (a == SOFTMAX) {
             // TODO: have to normalize by sum if we are using SOFTMAX
+            printf("softmax dividing by %f\n", sum);
             for (j = 0; j < m.cols; j++) {
                 m.data[i*m.cols + j] /= sum;
             }

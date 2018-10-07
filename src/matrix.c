@@ -98,7 +98,7 @@ matrix matmul(matrix a, matrix b)
     // TODO: 1.4 - Implement matrix multiplication. Make sure it's fast!
     assert (a.cols == b.rows);
     size_t i, j, k;
-    // Implementation 2: 2.7-2.9s
+    // 2.7-2.9s
     for (i = 0; i < c.rows; i++) {
         for (j = 0; j < a.cols; j++) {
             for (k = 0 ; k < c.cols; k++) {
@@ -106,19 +106,6 @@ matrix matmul(matrix a, matrix b)
             }
         }
     }
-
-    // Implementation 1: 22-23s
-    /*
-    for (i = 0; i < c.rows; i++) {
-        for (j = 0; j < c.cols; j++) {
-            float val = 0;
-            for (k = 0; k < a.cols; k++) {
-                val += a.data[(i * a.cols) + k] * b.data[(k * b.cols) +  j];
-            }
-            c.data[(i * c.cols) + j] = val;
-        }
-    }
-    */
 
     return c;
 }
